@@ -11,7 +11,14 @@ enum CardSuit {
     Hearts = "♥",
     Diamonds = "♦",
 }
-const cardSuits: CardSuit[] = [CardSuit.Clubs, CardSuit.Spades, CardSuit.Hearts, CardSuit.Diamonds];
+
+const cardSuits: CardSuit[] = [
+    CardSuit.Clubs,
+    CardSuit.Spades,
+    CardSuit.Hearts,
+    CardSuit.Diamonds,
+];
+
 const cardRanks: string[] = [
     "2",
     "3",
@@ -28,20 +35,32 @@ const cardRanks: string[] = [
     "A",
 ];
 
-export default function Card() {
-    const cardArray: Card[] = cardSuits.map((suit) =>
-        cardRanks.map((rank) => ({ suit, rank }))
-    ).flat();
+export default function CardList({ amountOfCards }: { amountOfCards: number }) {
+    const generateCards = (numCards: number): Card[] => {
+        const cards: Card[] = [];
 
-    const cards = cardArray.map((card) => `${card.rank} ${card.suit}`);
+        for (let i = 0; i < numCards; i++) {
+            const randomSuit = cardSuits[Math.floor(Math.random() * cardSuits.length)];
+            const randomRank = cardRanks[Math.floor(Math.random() * cardRanks.length)];
+            const card = { suit: randomSuit, rank: randomRank };
+            cards.push(card);
+        }
+
+        return cards;
+    };
+
+    const cards = generateCards(amountOfCards);
     console.log(cards);
-
     return (
         <div>
             <h1>Deck of Cards</h1>
-            {/*TODO: how do i make this an ordered list? with each element on a new line?*/}
-            <p>{cards}</p>
+            <ul>
+                {cards.map((card, index) => (
+                    <li key={index}>
+                        {card.rank} {card.suit}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
-
 }

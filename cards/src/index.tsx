@@ -6,7 +6,7 @@ import App from "./App";
 
 ReactDOM.render(
     <div>
-        <App></App>
+        <App amountOfCards={10}></App>
     </div>,
     document.getElementById("root")
 );
