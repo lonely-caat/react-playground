@@ -1,12 +1,17 @@
 import React from "react";
 
 interface Card {
-    suit: string;
+    suit: CardSuit;
     rank: string;
 }
 
-
-const cardSuits: string[] = ["♠", "♣", "♥", "♦"];
+enum CardSuit {
+    Spades = "♠",
+    Clubs = "♣",
+    Hearts = "♥",
+    Diamonds = "♦",
+}
+const cardSuits: CardSuit[] = [CardSuit.Clubs, CardSuit.Spades, CardSuit.Hearts, CardSuit.Diamonds];
 const cardRanks: string[] = [
     "2",
     "3",
