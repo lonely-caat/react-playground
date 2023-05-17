@@ -6,10 +6,10 @@ interface Card {
 }
 
 enum CardSuit {
-    Spades = "♠️",
-    Clubs = "♣️",
-    Hearts = "♥️",
-    Diamonds = "♦️",
+    Spades = "spades",
+    Clubs = "clubs",
+    Hearts = "hearts",
+    Diamonds = "diamonds",
 }
 
 const cardSuits: CardSuit[] = [
@@ -29,10 +29,10 @@ const cardRanks = [
     "8",
     "9",
     "10",
-    "J",
-    "Q",
-    "K",
-    "A",
+    "jack",
+    "queen",
+    "king",
+    "ace",
 ] as const;
 
 const compute = (index: number): Card => {
@@ -50,7 +50,10 @@ export default function CardList() {
         <div>
             <h1>Deck of Cards</h1>
             {result.map((card, index) => (
-                <div key={index}>{`${card.rank} ${card.suit}`}</div>
+                <div className="card" key={index} onClick={() => console.log(`./images/${card.rank}_of_${card.suit}`)}>
+                    <img src={`./public/images/${card.rank}_of_${card.suit}.png`} alt={card.rank}/>
+
+                </div>
             ))}
         </div>
     );
