@@ -19,6 +19,15 @@ const cardSuits: CardSuit[] = [
     CardSuit.Diamonds,
 ];
 
+
+const compute = (ranks: string[], index: number) => {
+    // if (index < 0 || index >= ranks.length) {
+    //     throw new Error('Index out of bounds');
+    // }
+    const position = index % ranks.length;
+    return ranks[position] as CardSuit;
+};
+
 const cardRanks: string[] = [
     "2",
     "3",
@@ -36,14 +45,18 @@ const cardRanks: string[] = [
 ];
 
 export default function CardList({ amountOfCards }: { amountOfCards: number }) {
-    const generateCards = (numCards: number): Card[] => {
+    const generateCards = (amountOfCards: number): Card[] => {
         const cards: Card[] = [];
 
-        for (let i = 0; i < numCards; i++) {
-            const randomSuit = cardSuits[Math.floor(Math.random() * cardSuits.length)];
-            const randomRank = cardRanks[Math.floor(Math.random() * cardRanks.length)];
-            const card = { suit: randomSuit, rank: randomRank };
-            cards.push(card);
+        if (amountOfCards < 0 || amountOfCards > cardRanks.length * cardSuits.length) {
+            throw new Error('Index out of bounds');
+        }
+
+        for (let i = 0; i < amountOfCards; i++) {
+            cards.push({
+                suit: compute(cardSuits, i),
+                rank: compute(cardRanks, i),
+            });
         }
 
         return cards;
@@ -51,6 +64,7 @@ export default function CardList({ amountOfCards }: { amountOfCards: number }) {
 
     const cards = generateCards(amountOfCards);
     console.log(cards);
+
     return (
         <div>
             <h1>Deck of Cards</h1>
