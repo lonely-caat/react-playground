@@ -6,10 +6,10 @@ interface Card {
 }
 
 enum CardSuit {
-    Spades = "♠",
-    Clubs = "♣",
-    Hearts = "♥",
-    Diamonds = "♦",
+    Spades = "♠️",
+    Clubs = "♣️",
+    Hearts = "♥️",
+    Diamonds = "♦️",
 }
 
 const cardSuits: CardSuit[] = [
@@ -19,16 +19,7 @@ const cardSuits: CardSuit[] = [
     CardSuit.Diamonds,
 ];
 
-
-const compute = (ranks: string[], index: number) => {
-    // if (index < 0 || index >= ranks.length) {
-    //     throw new Error('Index out of bounds');
-    // }
-    const position = index % ranks.length;
-    return ranks[position] as CardSuit;
-};
-
-const cardRanks: string[] = [
+const cardRanks = [
     "2",
     "3",
     "4",
@@ -42,39 +33,25 @@ const cardRanks: string[] = [
     "Q",
     "K",
     "A",
-];
+] as const;
 
-export default function CardList({ amountOfCards }: { amountOfCards: number }) {
-    const generateCards = (amountOfCards: number): Card[] => {
-        const cards: Card[] = [];
-
-        if (amountOfCards < 0 || amountOfCards > cardRanks.length * cardSuits.length) {
-            throw new Error('Index out of bounds');
-        }
-
-        for (let i = 0; i < amountOfCards; i++) {
-            cards.push({
-                suit: compute(cardSuits, i),
-                rank: compute(cardRanks, i),
-            });
-        }
-
-        return cards;
+const compute = (index: number): Card => {
+    return {
+        suit: cardSuits[Math.floor(index / cardRanks.length)],
+        rank: cardRanks[index % cardRanks.length],
     };
+};
 
-    const cards = generateCards(amountOfCards);
-    console.log(cards);
-
+const result = new Array(52).fill(0).map((_, index) => {
+    return compute(index);
+});
+export default function CardList() {
     return (
         <div>
             <h1>Deck of Cards</h1>
-            <ul>
-                {cards.map((card, index) => (
-                    <li key={index}>
-                        {card.rank} {card.suit}
-                    </li>
-                ))}
-            </ul>
+            {result.map((card, index) => (
+                <div key={index}>{`${card.rank} ${card.suit}`}</div>
+            ))}
         </div>
     );
 }
