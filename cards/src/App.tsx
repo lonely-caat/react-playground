@@ -1,13 +1,25 @@
 import React from "react";
 
 interface Card {
-    suit: string;
+    suit: CardSuit;
     rank: string;
 }
 
+enum CardSuit {
+    Spades = "♠️",
+    Clubs = "♣️",
+    Hearts = "♥️",
+    Diamonds = "♦️",
+}
 
-const cardSuits: string[] = ["♠", "♣", "♥", "♦"];
-const cardRanks: string[] = [
+const cardSuits: CardSuit[] = [
+    CardSuit.Clubs,
+    CardSuit.Spades,
+    CardSuit.Hearts,
+    CardSuit.Diamonds,
+];
+
+const cardRanks = [
     "2",
     "3",
     "4",
@@ -21,24 +33,25 @@ const cardRanks: string[] = [
     "Q",
     "K",
     "A",
-];
+] as const;
 
-export default function Card(){
-    const cardArray = []
-    for (const suit of cardSuits){for (const rank of cardRanks){
-        const card: Card = {suit, rank};
-        cardArray.push(card);
-    }}
+const compute = (index: number): Card => {
+    return {
+        suit: cardSuits[Math.floor(index / cardRanks.length)],
+        rank: cardRanks[index % cardRanks.length],
+    };
+};
 
-    const cards = cardArray.map((card) => `${card.rank} ${card.suit}`);
-    console.log(cards)
-
+const result = new Array(52).fill(0).map((_, index) => {
+    return compute(index);
+});
+export default function CardList() {
     return (
         <div>
             <h1>Deck of Cards</h1>
-            {/*TODO: how do i make this an ordered list? with each element on a new line?*/}
-            <p>{cards}</p>
+            {result.map((card, index) => (
+                <div key={index}>{`${card.rank} ${card.suit}`}</div>
+            ))}
         </div>
     );
-
 }
