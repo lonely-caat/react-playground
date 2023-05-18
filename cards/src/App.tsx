@@ -50,10 +50,7 @@ export default function CardList() {
     let [currentIndex, setCurrentIndex] = useState(0);
 
     const handleClick = function() {
-        while (currentIndex <=result.length) {
-            setCurrentIndex(currentIndex + 1);
-        }
-        currentIndex = 0;
+        setCurrentIndex((currentIndex + 1) % result.length);
     };
 
 
