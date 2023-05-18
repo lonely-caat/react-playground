@@ -1,0 +1,21 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "npm start": {
+      "name": "npm start",
+      "command": "npm start",
+      "runAtStart": true
+    },
+    "cd cards; npm start": {
+      "name": "cd cards; npm start",
+      "command": "cd cards; npm start"
+    },
+    "yarn install": {
+      "name": "yarn install",
+      "command": "yarn install"
+    }
+  }
+}
