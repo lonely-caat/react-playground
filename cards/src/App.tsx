@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface Card {
     suit: CardSuit;
@@ -45,16 +45,29 @@ const compute = (index: number): Card => {
 const result = new Array(52).fill(0).map((_, index) => {
     return compute(index);
 });
+
 export default function CardList() {
+    let [currentIndex, setCurrentIndex] = useState(0);
+
+    const handleClick = function() {
+        while (currentIndex <=result.length) {
+            setCurrentIndex(currentIndex + 1);
+        }
+        currentIndex = 0;
+    };
+
+
+    const currentCard = result[currentIndex];
+
     return (
         <div>
             <h1>Deck of Cards</h1>
-            {result.map((card, index) => (
-                <div className="card" key={index} onClick={() => console.log(`./images/${card.rank}_of_${card.suit}`)}>
-                    <img src={`./public/images/${card.rank}_of_${card.suit}.png`} alt={card.rank}/>
-
-                </div>
-            ))}
+            <div className="card" onClick={handleClick}>
+                <img
+                    src={require(`../public/images/${currentCard.rank}_of_${currentCard.suit}.png`)}
+                    alt={currentCard.rank}
+                />
+            </div>
         </div>
     );
 }
