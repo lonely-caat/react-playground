@@ -6,10 +6,11 @@ interface Card {
 }
 
 enum CardSuit {
-    Spades = "spades",
-    Clubs = "clubs",
-    Hearts = "hearts",
-    Diamonds = "diamonds",
+    Spades = "♠️",
+    Clubs = "♣️",
+    Hearts = "♥️",
+    Diamonds = "♦️",
+
 }
 
 const cardSuits: CardSuit[] = [
@@ -29,10 +30,10 @@ const cardRanks = [
     "8",
     "9",
     "10",
-    "jack",
-    "queen",
-    "king",
-    "ace",
+    "J",
+    "Q",
+    "K",
+    "A",
 ] as const;
 
 const compute = (index: number): Card => {
@@ -47,9 +48,9 @@ const result = new Array(52).fill(0).map((_, index) => {
 });
 
 export default function CardList() {
-    let [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleClick = function() {
+    const handleClick = () => {
         setCurrentIndex((currentIndex + 1) % result.length);
     };
 
@@ -59,11 +60,19 @@ export default function CardList() {
     return (
         <div>
             <h1>Deck of Cards</h1>
-            <div className="card" onClick={handleClick}>
-                <img
-                    src={require(`../public/images/${currentCard.rank}_of_${currentCard.suit}.png`)}
-                    alt={currentCard.rank}
-                />
+            <div className="card-container">
+                <div className="card" onClick={handleClick}>
+                    <div className="upper-right">
+                       <div>{currentCard.rank} </div>
+                       <div>{currentCard.suit} </div>
+                    </div>
+                    <div className="large-text">{currentCard.suit}</div>
+
+                    <div className="lower-left">
+                        <div>{currentCard.rank}</div>
+                        <div>{currentCard.suit}</div>
+                    </div>
+                </div>
             </div>
         </div>
     );
