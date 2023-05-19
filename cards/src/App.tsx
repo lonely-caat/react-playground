@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface Card {
     suit: CardSuit;
@@ -10,6 +10,7 @@ enum CardSuit {
     Clubs = "♣️",
     Hearts = "♥️",
     Diamonds = "♦️",
+
 }
 
 const cardSuits: CardSuit[] = [
@@ -45,13 +46,34 @@ const compute = (index: number): Card => {
 const result = new Array(52).fill(0).map((_, index) => {
     return compute(index);
 });
+
 export default function CardList() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handleClick = () => {
+        setCurrentIndex((currentIndex + 1) % result.length);
+    };
+
+
+    const currentCard = result[currentIndex];
+
     return (
         <div>
             <h1>Deck of Cards</h1>
-            {result.map((card, index) => (
-                <div key={index}>{`${card.rank} ${card.suit}`}</div>
-            ))}
+            <div className="card-container">
+                <div className="card" onClick={handleClick}>
+                    <div className="upper-right">
+                       <div>{currentCard.rank} </div>
+                       <div>{currentCard.suit} </div>
+                    </div>
+                    <div className="large-text">{currentCard.suit}</div>
+
+                    <div className="lower-left">
+                        <div>{currentCard.rank}</div>
+                        <div>{currentCard.suit}</div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
