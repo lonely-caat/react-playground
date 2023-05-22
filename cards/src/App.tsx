@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import Card from "./Card";
+import Shuffle from "./Shuffle";
 
-interface Card {
+export interface Card {
     suit: CardSuit;
     rank: string;
 }
@@ -50,8 +52,16 @@ const result = new Array(52).fill(0).map((_, index) => {
 export default function CardList() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleClick = () => {
+    const nextCard = () => {
         setCurrentIndex((currentIndex + 1) % result.length);
+    };
+
+    const shuffle = () => {
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i+1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        nextCard();
     };
 
 
@@ -59,21 +69,12 @@ export default function CardList() {
 
     return (
         <div>
-            <h1>Deck of Cards</h1>
             <div className="card-container">
-                <div className="card" onClick={handleClick}>
-                    <div className="upper-right">
-                       <div>{currentCard.rank} </div>
-                       <div>{currentCard.suit} </div>
-                    </div>
-                    <div className="large-text">{currentCard.suit}</div>
 
-                    <div className="lower-left">
-                        <div>{currentCard.rank}</div>
-                        <div>{currentCard.suit}</div>
-                    </div>
-                </div>
-            </div>
+        <h1>Deck of Cards</h1>
+            <Card onClick={nextCard} currentCard={currentCard}></Card>
+            <Shuffle onClick={shuffle}></Shuffle>
+        </div>
         </div>
     );
 }
