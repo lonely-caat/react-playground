@@ -9,17 +9,20 @@ export const useCardActions = () => {
         setCurrentIndex((currentIndex + 1) % result.length);
     };
 
-    const shuffle = () => {
-        for (let i = result.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [result[i], result[j]] = [result[j], result[i]];
-        }
-        nextCard();
+    const shuffle = <T>(array: T[]): T[] => {
+        return array
+            .map(value => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value);
     };
+
+    const deal = <T>(array: T[], amount:number): T[] => {
+        return array.splice(0, amount);
+    }
 
     return {
         currentIndex,
-        currentCard: result[currentIndex],
+        deal,
         nextCard,
         shuffle,
     };
