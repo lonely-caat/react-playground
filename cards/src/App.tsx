@@ -23,7 +23,6 @@ export default function CardList() {
         return <CardBase currentCard={card}/>
     }
 
-    console.log(deck.length+'!!!!!!!!!!!!!!!')
 
     return (
         <div>
