@@ -2,11 +2,11 @@ import React from "react";
 import {Card as CardInterface} from "./App";
 
 interface CardProps {
-    onClick: () => void;
+    onClick?: () => void;
     currentCard: CardInterface;
 }
 
-export default function Card({onClick, currentCard }:CardProps) {
+export default function CardBase({onClick, currentCard }:CardProps) {
     return (
             <div className="card" onClick={onClick}>
                 <div className="upper-right">
